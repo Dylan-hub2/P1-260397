@@ -33,7 +33,8 @@ function draw() {
   rect(100,200,150,50)
 fill(0)
   text("2.flag",95,95)
-
+  
+  strokeWeight(1)
   rect(800,800,100,100)
 
   rect(600,800,100,100)
@@ -441,7 +442,6 @@ rect(1510,330,65,5)
 fill(0)
 text("slapen",1450,300)
 
-fill(0)
 text("eten",1450,100)
 
 
