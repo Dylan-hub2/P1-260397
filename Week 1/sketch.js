@@ -33,7 +33,7 @@ function draw() {
   rect(100,200,150,50)
 fill(0)
   text("2.flag",95,95)
-  
+
   strokeWeight(1)
   rect(800,800,100,100)
 
@@ -443,6 +443,32 @@ fill(0)
 text("slapen",1450,300)
 
 text("eten",1450,100)
+
+fill("red")
+rect(1350,800,300,150)
+
+fill("#cd0909")
+circle(1400,835,50)
+
+fill("#cd0909")
+circle(1500,835,50)
+
+fill("#cd0909")
+circle(1600,835,50)
+
+fill("#cd0909")
+circle(1600,915,50)
+
+fill("#cd0909")
+circle(1500,915,50)
+
+fill("#cd0909")
+circle(1400,915,50)
+
+fill(0)
+text("lego brick",1300,775)
+
+text("persoonlijk ding",1300,750)
 
 
 
