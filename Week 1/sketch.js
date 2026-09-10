@@ -472,4 +472,3 @@ text("persoonlijk ding",1300,750)
 
 
 }
-
