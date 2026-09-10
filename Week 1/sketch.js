@@ -471,6 +471,5 @@ text("lego brick",1300,775)
 text("persoonlijk ding",1300,750)
 
 
-
 }
 
