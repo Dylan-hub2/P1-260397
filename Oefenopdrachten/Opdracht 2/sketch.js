@@ -23,5 +23,6 @@ function draw() {
   text("aftrekken: " + aftrekken, 20 ,80)
   let delen = a/b 
   text("delen: " + delen, 20 ,90)
-  let
+  let vermenigvuldigen = a * b;
+  text("vermenigvuldigen: " + vermenigvuldigen, 20, 100)
 }
