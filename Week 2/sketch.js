@@ -9,6 +9,7 @@ function draw() {
   background(255);
   strokeWeight(0)
 // ik ga eerst de dingen zonder variablelelele doen
+
   fill("#99eafe")
   rect(0,0,800, 600)
 
@@ -59,9 +60,10 @@ if (x >= 850) {
 
 autostart += 0.05 * deltaTime;
 fill('#000000');
-rect(autostart, 600, 100, 100);
+rect(autostart, 475, 100, 75);
 
-circle(autostart, 650, 25);
+circle(autostart, 550, 25);
+circle(autostart,550, 25);
 
 if (autostart >= 850) {
   autostart = 0;
