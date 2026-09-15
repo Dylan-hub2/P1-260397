@@ -3,6 +3,7 @@ function setup() {
 }
 
 let x = 0
+let autostart = 0.1
 
 function draw() {
   background(255);
@@ -45,7 +46,7 @@ rect(250,425,25,75)
 
 fill("#01570e")
 circle(262,415,75)
-
+// na deze regel doe ik met variebelelele
 x += 0.01 * deltaTime;
 fill('yellow');
 circle(x, 40, 75);
@@ -56,14 +57,16 @@ if (x >= 850) {
   x += 0.01 * deltaTime;
 }
 
-x += 0.05 * deltaTime;
+autostart += 0.05 * deltaTime;
 fill('#000000');
-rect(0,600,100,100);
+rect(autostart, 600, 100, 100);
 
-if (x >= 850) {
-  x = 0;
+circle(autostart, 650, 25);
+
+if (autostart >= 850) {
+  autostart = 0;
 } else {
-  x += 0.05 * deltaTime;
+  autostart += 0.05 * deltaTime;
 }
 
 }
