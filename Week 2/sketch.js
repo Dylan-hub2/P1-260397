@@ -2,6 +2,8 @@ function setup() {
   createCanvas(800, 600);
 }
 
+let x = 0
+
 function draw() {
   background(255);
   strokeWeight(0)
@@ -44,6 +46,24 @@ rect(250,425,25,75)
 fill("#01570e")
 circle(262,415,75)
 
+x += 0.01 * deltaTime;
+fill('yellow');
+circle(x, 40, 75);
 
+if (x >= 850) {
+  x = 0;
+} else {
+  x += 0.01 * deltaTime;
+}
+
+x += 0.05 * deltaTime;
+fill('#000000');
+rect(0,600,100,100);
+
+if (x >= 850) {
+  x = 0;
+} else {
+  x += 0.05 * deltaTime;
+}
 
 }
