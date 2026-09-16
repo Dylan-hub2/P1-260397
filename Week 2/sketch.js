@@ -3,7 +3,9 @@ function setup() {
 }
 
 let x = 0
-let autostart = 0.1
+let autostart = 0
+let w2 = 0
+let w1 = 0
 
 function draw() {
   background(255);
@@ -48,27 +50,33 @@ rect(250,425,25,75)
 fill("#01570e")
 circle(262,415,75)
 // na deze regel doe ik met variebelelele
-x += 0.01 * deltaTime;
-fill('yellow');
-circle(x, 40, 75);
 
-if (x >= 850) {
-  x = 0;
-} else {
+// Gele cirkel
   x += 0.01 * deltaTime;
-}
+  fill("yellow");
+  circle(x, 40, 75);
 
-autostart += 0.05 * deltaTime;
-fill('#000000');
-rect(autostart, 475, 100, 75);
+  if (x >= 850) {
+    x = 0;
+  }
 
-circle(autostart, 550, 25);
-circle(autostart,550, 25);
-
-if (autostart >= 850) {
-  autostart = 0;
-} else {
+  // Auto 1
   autostart += 0.05 * deltaTime;
-}
+
+  if (autostart >= 850) {
+    autostart = -100;
+  }
+
+  fill("#000dff");
+  rect(autostart, 450, 100, 75);
+
+  // Wielen horen bij de auto
+  fill("#000000");
+  circle(autostart + 20, 525, 25);
+  circle(autostart + 80, 525, 25);
+
+  
 
 }
+
+
