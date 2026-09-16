@@ -62,11 +62,11 @@ function draw() {
     x = 0;
   }
 
-  // =====================
+  
   // AUTO 1
-  // =====================
 
-  autostart += 0.05 * deltaTime;
+  
+  autostart += 0.15 * deltaTime;
 
   if (autostart >= 850) {
     autostart = -100;
@@ -79,10 +79,8 @@ function draw() {
   circle(autostart + 20, 525, 25);
   circle(autostart + 80, 525, 25);
 
-  // =====================
   // AUTO 2
-  // =====================
-
+  
   auto2 += 0.5 * deltaTime;
 
   if (auto2 >= 850) {
