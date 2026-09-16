@@ -2,6 +2,7 @@ let x = 0;
 let autostart = 0;
 let auto2 = -200;
 let keyPress = 0;
+let verkeerslicht = 0;
 
 function setup() {
   createCanvas(800, 600);
@@ -27,10 +28,34 @@ function draw() {
   fill("#4e534e");
   rect(0, 505, 800, 150);
 
-  // Paaltje
-  fill(0);
-  rect(708, 400, 10, 100);
-  rect(700, 400, 25, 75);
+// Kast
+  fill(50);
+  rect(20, 240, 70, 170);
+
+  // Rood
+  if (verkeerslicht == 0) {
+    fill(255, 0, 0);
+  } else {
+    fill(100);
+  }
+  circle(55, 270, 40);
+
+  // Oranje
+  if (verkeerslicht == 1) {
+    fill("orange");
+  } else {
+    fill(100);
+  }
+  circle(55, 325, 40);
+
+  // Groen
+  if (verkeerslicht == 2) {
+    fill("green");
+  } else {
+    fill(100);
+  }
+  circle(55, 380, 40);
+
 
   // Gele lijn
   fill("#ffd634");
@@ -65,7 +90,7 @@ function draw() {
   
   // AUTO 1
 
-  
+
   autostart += 0.15 * deltaTime;
 
   if (autostart >= 850) {
@@ -94,24 +119,10 @@ function draw() {
   circle(auto2 + 20, 585, 25);
   circle(auto2 + 80, 585, 25);
 }
+if (keyCode === ENTER) {
+  verkeerslicht++;
 
-function keyPressed() {
-  if (keyCode === ENTER) {
-    keyPress += 1;
-
-    if (keyPress >= 4) {
-      keyPress = 1;
-    }
-
-    if (keyPress === 1) {
-      autostart = 0.2;
-    } 
-    else if (keyPress === 2) {
-      autostart = 0.1;
-    } 
-    else if (keyPress === 3) {
-      autostart = 0;
-    }
+  if (verkeerslicht > 2) {
+    verkeerslicht = 0;
   }
-  
-}
+} 
