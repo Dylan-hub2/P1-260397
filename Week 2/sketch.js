@@ -173,7 +173,12 @@ wolkstart4 -= 0.05 * deltaTime;
       car1speed = 0.15
       car2speed = 0.5
     }
-      
+
+    
+      fill("#632e02");
+  rect(450, 525, 25, 75);
+  fill("#01570e");
+  circle(462, 515, 75);
   
 }
 
