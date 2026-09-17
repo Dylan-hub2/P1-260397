@@ -1,4 +1,4 @@
-//zon en maan
+//zon
 let Zonx = 0;
 let Zony = 40;
 let ZonstartX = Zonx;
@@ -22,7 +22,7 @@ let wolkstart3 = 810;
 let wolkstart4 = 830;
 
 //ufo
-let ufo1 = 2500;
+let ufo1 = 5000;
 
 
 function setup() {
@@ -173,7 +173,7 @@ function draw() {
 ufo1 -= 0.1 * deltaTime
 
 if (ufo1 <= -100) {
-  ufo1 = 2500
+  ufo1 = 5000
 }
 
 
@@ -228,7 +228,7 @@ ellipse(ufo1,100,125,50)
   circle(auto2 + 80, 585, 25);
 
 
-  // Extra boom
+  // voorste boom
   fill("#632e02");
   rect(450, 525, 25, 75);
 
