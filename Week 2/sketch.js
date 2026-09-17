@@ -3,11 +3,15 @@ let autostart = 0;
 let auto2 = -200;
 let keyPress = 0;
 let verkeerslicht = 0;
+
 let car1speed = 0.15
 let car2speed = 0.5
+
 let wolkstart = 850
 let wolkstart2 = 825
-let wolkstart3 = 835
+let wolkstart3 = 810
+let wolkstart4 = 830
+
 function setup() {
   createCanvas(800, 600);
 }
@@ -112,12 +116,20 @@ function draw() {
 wolkstart3 -= 0.05 * deltaTime;
 
   fill("white");
-  circle(wolkstart3, 80, 40);
+  circle(wolkstart3, 95, 45);
   
   if (wolkstart3 <= -50) {
     wolkstart3 = 850;
   }
+// wolk deel 4
+wolkstart4 -= 0.05 * deltaTime;
 
+  fill("white");
+  circle(wolkstart4, 85, 45);
+  
+  if (wolkstart4 <= -50) {
+    wolkstart4 = 850;
+  }
   // AUTO 1
 
 
