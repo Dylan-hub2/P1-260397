@@ -51,7 +51,7 @@ function draw() {
   }
   circle(55, 270, 40);
 
-  // Groen
+  // oranje
   if (verkeerslicht == 1) {
     fill("orange");
   } else {

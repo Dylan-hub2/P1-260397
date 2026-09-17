@@ -3,6 +3,8 @@ let autostart = 0;
 let auto2 = -200;
 let keyPress = 0;
 let verkeerslicht = 0;
+let car1speed = 0.15
+let car2speed = 0.5
 
 function setup() {
   createCanvas(800, 600);
@@ -30,7 +32,7 @@ function draw() {
 
 // Kast
   fill(50);
-  rect(20, 240, 70, 170);
+  rect(650, 240, 70, 170);
 
   // Rood
   if (verkeerslicht == 0) {
@@ -38,7 +40,7 @@ function draw() {
   } else {
     fill(100);
   }
-  circle(55, 270, 40);
+  circle(685, 270, 40);
 
   // Oranje
   if (verkeerslicht == 1) {
@@ -46,7 +48,7 @@ function draw() {
   } else {
     fill(100);
   }
-  circle(55, 325, 40);
+  circle(685, 325, 40);
 
   // Groen
   if (verkeerslicht == 2) {
@@ -54,7 +56,7 @@ function draw() {
   } else {
     fill(100);
   }
-  circle(55, 380, 40);
+  circle(685, 380, 40);
 
 
   // Gele lijn
@@ -77,7 +79,7 @@ function draw() {
   fill("#01570e");
   circle(262, 415, 75);
 
-  // Gele cirkel / zon
+  // zon
   x += 0.01 * deltaTime;
 
   fill("yellow");
@@ -91,7 +93,7 @@ function draw() {
   // AUTO 1
 
 
-  autostart += 0.15 * deltaTime;
+  autostart += car1speed * deltaTime;
 
   if (autostart >= 850) {
     autostart = -100;
@@ -106,7 +108,7 @@ function draw() {
 
   // AUTO 2
   
-  auto2 += 0.5 * deltaTime;
+  auto2 += car2speed * deltaTime;
 
   if (auto2 >= 850) {
     auto2 = -150;
@@ -118,11 +120,37 @@ function draw() {
   fill("#000000");
   circle(auto2 + 20, 585, 25);
   circle(auto2 + 80, 585, 25);
-}
-if (keyCode === ENTER) {
-  verkeerslicht++;
 
-  if (verkeerslicht > 2) {
+    if (verkeerslicht > 2) {
     verkeerslicht = 0;
+    } else if (verkeerslicht == 0) {
+    car1speed = 0
+    car2speed = 0
+    } else if (verkeerslicht == 1) {
+      car1speed = 0.075
+      car2speed = 0.25
+    } else if (verkeerslicht == 2) {
+      car1speed = 0.15
+      car2speed = 0.5
+    }
+      
+  
+}
+
+function keyPressed() {
+
+    // Spatie = teller op 0
+  if (keyCode === 32) {
+    teller = 0;
   }
-} 
+
+  // Enter = verkeerslicht veranderen
+  if (keyCode === ENTER) {
+    verkeerslicht++;
+  }
+    
+}
+
+
+
+    
