@@ -3,8 +3,6 @@ let Zonx = 0;
 let Zony = 40;
 let ZonstartX = Zonx;
 let ZonstartY = Zony;
-let Maanx = -1000;
-let threshold = 860;
 let Zonkleur = "yellow";
 
 //auto
@@ -160,10 +158,7 @@ function draw() {
   fill("white");
   circle(wolkstart3, 95, 45);
 
-// wolk deel 4
-  fill("white");
-  circle(wolkstart3, 95, 45);
-  
+
   // wolk deel 4
   wolkstart4 -= 0.05 * deltaTime;
 
@@ -204,7 +199,7 @@ ellipse(ufo1,100,125,50)
   }
 
 
-  // Auto 1
+  // Autobaan 1
   autostart += car1speed * deltaTime;
 
   if (autostart >= 850) {
@@ -217,7 +212,6 @@ ellipse(ufo1,100,125,50)
   fill("#000000");
   circle(autostart + 20, 525, 25);
   circle(autostart + 80, 525, 25);
-
 
   // AUTO 2
   auto2 += car2speed * deltaTime;
