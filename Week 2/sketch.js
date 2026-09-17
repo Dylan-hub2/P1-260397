@@ -5,7 +5,9 @@ let keyPress = 0;
 let verkeerslicht = 0;
 let car1speed = 0.15
 let car2speed = 0.5
-
+let wolkstart = 850
+let wolkstart2 = 825
+let wolkstart3 = 835
 function setup() {
   createCanvas(800, 600);
 }
@@ -20,7 +22,7 @@ function draw() {
 
   // Berg
   fill("#524d4d");
-  triangle(250, 50, 25, 500, 500, 500);
+  triangle(250, 125, 25, 500, 500, 500);
 
   // Gras
   fill("#023800");
@@ -43,7 +45,7 @@ function draw() {
   circle(685, 270, 40);
 
   // Oranje
-  if (verkeerslicht == 1) {
+  if (verkeerslicht == 2) {
     fill("orange");
   } else {
     fill(100);
@@ -51,7 +53,7 @@ function draw() {
   circle(685, 325, 40);
 
   // Groen
-  if (verkeerslicht == 2) {
+  if (verkeerslicht == 1) {
     fill("green");
   } else {
     fill(100);
@@ -88,8 +90,34 @@ function draw() {
   if (x >= 850) {
     x = 0;
   }
+// wolk deel 1
+  wolkstart -= 0.05 * deltaTime;
 
+  fill("white");
+  circle(wolkstart, 95, 45);
   
+  if (wolkstart <= -50) {
+    wolkstart = 850;
+  }
+  // wolk deel 2
+  wolkstart2 -= 0.05 * deltaTime;
+
+  fill("white");
+  circle(wolkstart2, 95, 45);
+  
+  if (wolkstart2 <= -50) {
+    wolkstart2 = 850;
+  }
+// wolk deel 3
+wolkstart3 -= 0.05 * deltaTime;
+
+  fill("white");
+  circle(wolkstart3, 80, 40);
+  
+  if (wolkstart3 <= -50) {
+    wolkstart3 = 850;
+  }
+
   // AUTO 1
 
 
@@ -126,10 +154,10 @@ function draw() {
     } else if (verkeerslicht == 0) {
     car1speed = 0
     car2speed = 0
-    } else if (verkeerslicht == 1) {
+    } else if (verkeerslicht == 2) {
       car1speed = 0.075
       car2speed = 0.25
-    } else if (verkeerslicht == 2) {
+    } else if (verkeerslicht == 1) {
       car1speed = 0.15
       car2speed = 0.5
     }
