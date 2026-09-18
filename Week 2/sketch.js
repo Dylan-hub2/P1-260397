@@ -90,7 +90,6 @@ function draw() {
 
   circle(685, 325, 40);
 
-
   // Groen
   if (verkeerslicht === 1) {
     fill("green");
@@ -107,24 +106,28 @@ function draw() {
 
 
   // Bomen
-  fill("#632e02");
-  rect(50, 425, 25, 75);
+  boom(50,425);
+  // fill("#632e02");
+  // rect(50, 425, 25, 75);
 
-  fill("#01570e");
-  circle(62, 415, 75);
+  // fill("#01570e");
+  // circle(62, 415, 75);
 
-  fill("#632e02");
-  rect(150, 425, 25, 75);
+  boom(150, 425)
+  // fill("#632e02");
+  // rect(150, 425, 25, 75);
 
-  fill("#01570e");
-  circle(162, 415, 75);
+  // fill("#01570e");
+  // circle(162, 415, 75);
 
-  fill("#632e02");
-  rect(250, 425, 25, 75);
+  boom(250, 425)
+  // fill("#632e02");
+  // rect(250, 425, 25, 75);
 
-  fill("#01570e");
-  circle(262, 415, 75);
+  // fill("#01570e");
+  // circle(262, 415, 75);
 
+  boom(350,425);
 
   // zon
 
@@ -236,6 +239,14 @@ ellipse(ufo1,100,125,50)
   circle(462, 515, 75);
 }
 
+function boom(x, y) {
+    // Bomen
+  fill("#632e02");
+  rect(x, y, 25, 75);
+
+  fill("#01570e");
+  circle(x+12, y-10, 75);
+}
 
 function keyPressed() {
 
