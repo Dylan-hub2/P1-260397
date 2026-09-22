@@ -42,15 +42,16 @@ function draw() {
   // row 3  
   rect(rowX3, rowY3, 100, 100)
   rowX3 = 400 + 50
+  rowY3 = 450
+  rect(rowX3, rowY3, 100, 100)
+  rowX3 = 400 + 50
+  rowY3 = 300
 
   rect(rowX3, rowY3, 100, 100)
   rowX3 = 400 + 50
-  rowY3 = + 300
+  rowY3 = 150
   
-  rect(rowX3, rowY3, 100, 100)
-  rowX3 = 400 + 50
-
-
+  
 }
 
 
