@@ -1,9 +1,19 @@
-let rowX1 = 100;
-let rowX2 = 150
-let rowX3 = 200
-let rowY1 = 100;
-let rowY2 = 150;
-let rowY3 = 150;
+let blocks = [
+  // Row 1
+  { x: 150, y: 150, color: "grey" },
+  { x: 300, y: 150, color: "grey" },
+  { x: 450, y: 150, color: "grey" },
+
+  // Row 2
+  { x: 150, y: 300, color: "grey" },
+  { x: 300, y: 300, color: "grey" },
+  { x: 450, y: 300, color: "grey" },
+
+  // Row 3
+  { x: 150, y: 450, color: "grey" },
+  { x: 300, y: 450, color: "grey" },
+  { x: 450, y: 450, color: "grey" }
+];
 
 function setup() {
   createCanvas(1000, 800);
@@ -11,51 +21,49 @@ function setup() {
 
 function draw() {
   background(50);
-  strokeWeight(0)
-  fill(25)
-  rect(100, 100, 500, 500, 25)
+strokeWeight(0)
+  // base
+  fill(25);
+  rect(100, 100, 500, 500, 25);
 
-  // row 1
-  fill(100)
-  rect(rowX1, rowY1, 100, 100, 15)
-  rowY1 = 100 + 50
-  rowX1 = 250 + 50
+  // Draw blocks
+  for (let block of blocks) {
 
-  rect(rowX1, rowY1, 100, 100, 15)
-  rowY1 = 150 + 150
-  rowX1 = 250 + 50
+    if (block.color === "grey") {
+      fill(50);
+    } 
+    else if (block.color === "red") {
+      fill(255, 0, 0);
+    } 
+    else if (block.color === "blue") {
+      fill(0, 0, 255);
+    }
 
-  rect(rowX1, rowY1, 100, 100, 15)
-  rowY1 = 250 + 200
-  rowX1 = 250 + 50
-
-  //row 2 
-  rect(rowX2, rowY2, 100, 100, 15)
-  rowY2 = 100 + 50
-
-  rect(rowX2, rowY2, 100, 100, 15)
-  rowY2 = 150 + 150
-
-  rect(rowX2, rowY2, 100, 100, 15)
-  rowY2 = 250 + 200
-
-  // row 3  
-  rect(rowX3, rowY3, 100, 100, 15)
-  rowX3 = 400 + 50
-  rowY3 = 450
-  rect(rowX3, rowY3, 100, 100, 15)
-  rowX3 = 400 + 50
-  rowY3 = 300
-
-  rect(rowX3, rowY3, 100, 100, 15)
-  rowX3 = 400 + 50
-  rowY3 = 150
-
-
-}
-function mouseclicked() {
-
-
-
+    rect(block.x, block.y, 100, 100, 15);
+  }
 }
 
+function mouseClicked() {
+
+  for (let block of blocks) {
+
+    if (
+      mouseX >= block.x &&
+      mouseX <= block.x + 100 &&
+      mouseY >= block.y &&
+      mouseY <= block.y + 100
+    ) {
+
+      // Grey → Red → Blue → Grey
+      if (block.color === "grey") {
+        block.color = "red";
+      } 
+      else if (block.color === "red") {
+        block.color = "blue";
+      } 
+      else {
+        block.color = "grey";
+      }
+    }
+  }
+}
