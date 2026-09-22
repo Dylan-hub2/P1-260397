@@ -54,7 +54,7 @@ function mouseClicked() {
       mouseY <= block.y + 100
     ) {
 
-      // Grey → Red → Blue → Grey
+      // Block color
       if (block.color === "grey") {
         block.color = "red";
       } 
