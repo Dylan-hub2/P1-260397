@@ -20,16 +20,17 @@ let winner = "";
 let gameOver = false;
 let cpuThinking = false;
 
+// CPU can be turned on or off
+let cpuEnabled = true;
 
 function setup() {
   createCanvas(1000, 800);
 }
 
-
 function draw() {
   background(50);
 
-  // Base
+  // Draw base
   fill(25);
   rect(100, 100, 500, 500, 25);
 
@@ -57,8 +58,7 @@ function draw() {
     }
   }
 
-
-  // Game text
+  // Display game text
   fill(255);
   textAlign(CENTER, CENTER);
 
@@ -79,11 +79,37 @@ function draw() {
 
   else {
     textSize(30);
-    text("YOUR TURN", 350, 650);
+
+    if (cpuEnabled) {
+
+      if (currentColor === "red") {
+        text("YOUR TURN", 350, 650);
+      }
+      else {
+        text("CPU'S TURN", 350, 650);
+      }
+
+    }
+    else {
+      text(currentColor.toUpperCase() + "'S TURN", 350, 650);
+    }
   }
 
+  // Draw CPU button
+  fill(100);
+  rect(650, 150, 200, 70, 15);
 
-  // Reset button
+  fill(255);
+  textSize(25);
+
+  if (cpuEnabled) {
+    text("CPU: ON", 750, 185);
+  }
+  else {
+    text("CPU: OFF", 750, 185);
+  }
+
+  // Draw reset button when game is over
   if (gameOver) {
 
     fill(100);
@@ -95,9 +121,22 @@ function draw() {
   }
 }
 
-// PLAYER CLICK
-
 function mouseClicked() {
+
+  // Check CPU button
+  if (
+    mouseX >= 650 &&
+    mouseX <= 850 &&
+    mouseY >= 150 &&
+    mouseY <= 220
+  ) {
+
+    if (!cpuThinking) {
+      cpuEnabled = !cpuEnabled;
+    }
+
+    return;
+  }
 
   // Check reset button
   if (gameOver) {
@@ -114,19 +153,22 @@ function mouseClicked() {
     return;
   }
 
-
-  // Don't allow player to click while CPU is moving
+  // Don't allow clicks while CPU is thinking
   if (cpuThinking) {
     return;
   }
 
+  // When CPU is on, the player controls red
+  if (cpuEnabled && currentColor !== "red") {
+    return;
+  }
 
-  // Player is red
+  // Check every block
   for (let i = 0; i < blocks.length; i++) {
 
     let block = blocks[i];
 
-    // Check if mouse is inside the block
+    // Check if the mouse is inside the block
     if (
       mouseX >= block.x &&
       mouseX <= block.x + 100 &&
@@ -134,28 +176,43 @@ function mouseClicked() {
       mouseY <= block.y + 100
     ) {
 
-      // Only grey blocks can be clicked
+      // Only grey blocks can be selected
       if (block.color === "grey") {
 
-        // Make block red
-        block.color = "red";
+        // Give the block the current player's color
+        block.color = currentColor;
 
-        // Check if player won
+        // Check for a winner
         checkWinner();
 
-        // Check for draw
+        // Check for a draw
         if (winner === "") {
           checkDraw();
         }
 
-        // If game is still going, CPU plays
+        // Continue the game if nobody won
         if (!gameOver) {
 
-          currentColor = "blue";
-          cpuThinking = true;
+          // Start the CPU's turn
+          if (cpuEnabled) {
 
-          // CPU waits 500 milliseconds
-          setTimeout(cpuMove, 500);
+            currentColor = "blue";
+            cpuThinking = true;
+
+            // Wait half a second before the CPU moves
+            setTimeout(cpuMove, 500);
+          }
+
+          // Switch players when CPU is off
+          else {
+
+            if (currentColor === "red") {
+              currentColor = "blue";
+            }
+            else {
+              currentColor = "red";
+            }
+          }
         }
 
         break;
@@ -164,9 +221,19 @@ function mouseClicked() {
   }
 }
 
-// EASY CPU
-
 function cpuMove() {
+
+  // Stop if CPU is disabled
+  if (!cpuEnabled) {
+    cpuThinking = false;
+    return;
+  }
+
+  // Stop if the game has ended
+  if (gameOver) {
+    cpuThinking = false;
+    return;
+  }
 
   // Find all empty blocks
   let emptyBlocks = [];
@@ -178,45 +245,38 @@ function cpuMove() {
     }
   }
 
-
-  // If there are empty blocks
+  // Choose a random empty block
   if (emptyBlocks.length > 0) {
 
-    // Pick a random empty block
     let randomIndex = floor(random(emptyBlocks.length));
 
-    // Get the actual block number
     let chosenBlock = emptyBlocks[randomIndex];
 
-    // Make it blue
+    // Make the chosen block blue
     blocks[chosenBlock].color = "blue";
   }
 
-
-  // CPU finished thinking
+  // CPU has finished its turn
   cpuThinking = false;
 
-  // Check if CPU won
+  // Check if the CPU won
   checkWinner();
 
-  // Check for draw
+  // Check for a draw
   if (winner === "") {
     checkDraw();
   }
 
-
-  // Give the turn back to player
+  // Give the turn back to the player
   if (!gameOver) {
     currentColor = "red";
   }
 }
 
-// CHECK WINNER
-
 function checkWinner() {
 
+  // All possible winning combinations
   let winningCombinations = [
-
     // Rows
     [0, 1, 2],
     [3, 4, 5],
@@ -232,43 +292,37 @@ function checkWinner() {
     [2, 4, 6]
   ];
 
-
-  // Check every combination
+  // Check every winning combination
   for (let combo of winningCombinations) {
 
     let first = blocks[combo[0]].color;
     let second = blocks[combo[1]].color;
     let third = blocks[combo[2]].color;
 
-
-    // Check if all three are the same
     if (
       first !== "grey" &&
       first === second &&
       first === third
     ) {
 
+      // Set the winner
       winner = first;
       gameOver = true;
       cpuThinking = false;
 
-
-      // Make winning blocks bigger
+      // Make the winning blocks bigger
       blocks[combo[0]].winning = true;
       blocks[combo[1]].winning = true;
       blocks[combo[2]].winning = true;
-
 
       return;
     }
   }
 }
 
-// CHECK DRAW
-
 function checkDraw() {
 
-  // Look for grey blocks
+  // Check if any grey blocks remain
   for (let block of blocks) {
 
     if (block.color === "grey") {
@@ -276,24 +330,20 @@ function checkDraw() {
     }
   }
 
-
-  // No grey blocks left
+  // No grey blocks remain, so it is a draw
   gameOver = true;
   cpuThinking = false;
 }
 
-// RESET GAME
-
 function resetGame() {
 
-  // Reset all blocks
+  // Reset every block
   for (let block of blocks) {
     block.color = "grey";
     block.winning = false;
   }
 
-
-  // Reset game variables
+  // Reset the game
   currentColor = "red";
   winner = "";
   gameOver = false;
