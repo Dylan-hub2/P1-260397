@@ -52,7 +52,7 @@ function draw() {
     // Make winning blocks bigger
     if (block.winning) {
       rect(block.x - 10, block.y - 10, 120, 120, 15);
-    } 
+    }
     else {
       rect(block.x, block.y, 100, 100, 15);
     }
