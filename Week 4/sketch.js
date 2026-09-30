@@ -50,7 +50,7 @@ function randomizeShapes() {
   // Pick ONE random amount
   amount = int(random(100, 200));
 
-  // Create that many shapes
+  // Create shapes
   for (let i = 0; i < amount; i++) {
     posX.push(int(random(10, 950)));
     posY.push(int(random(10, 650)));
