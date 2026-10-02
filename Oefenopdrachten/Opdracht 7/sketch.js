@@ -1,25 +1,93 @@
-let per[kian,kikan,kiko,kiin,kein,krien,kijn,glein,gliem,wien,klem,plem,slem,grem,grurg,irongolem,koin,kion,klongh,kiangathanslangthanganlangthangijantanpietersongerbeerttufyskankerbanggarangaslingtongethangatheragtarthagriododshablooncondoomangola,]
+let px = 10;
 
-
+const mario = [
+  "        RRRRRRRR        ",
+  "      RRRRRRRRRRRR      ",
+  "     RRRRRRRRRRRRRR     ",
+  "     RRRRRRRRRRRRRR     ",
+  "     HHHSSSSSSHHH       ",
+  "    HHHSSSSSSSSHHH      ",
+  "    HHHSSSSSSSSSS       ",
+  "     SSSSSSSSSSSS       ",
+  "      SSSSSSSSSSS       ",
+  "       HHHHHHHH         ",
+  "       SSSSSSSSS        ",
+  "      RRRRRRRRRRR       ",
+  "     RRRRRRRRRRRRR      ",
+  "    RRRBBBBBBBBBRRR     ",
+  "    RRRBBBBBBBBBRRR     ",
+  "     BBBYBBBBYBBB       ",
+  "      BBBBBBBBB         ",
+  "      BBBBBBBBB         ",
+  "       BBBBBBB          ",
+  "       BBB BBB          ",
+  "      BBB   BBB         ",
+  "     DDDD   DDDD        ",
+  "    DDDDD   DDDDD       "
+];
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(320, 300);
+  noStroke();
+  noSmooth();
+  clear();
 }
 
 function draw() {
-  background(220);
-  let index = 1;
-  for (let i = 0; i < 5; i++) {
-    for (let j = 0; j < 5; j++) {
-      if(index % 2 == 0) {
-        fill(255)
-      } else {
-        fill(0)
+  clear();
+  drawMario(45, 25);
+}
+
+function drawMario(x, y) {
+
+  for (let row = 0; row < mario.length; row++) {
+    for (let col = 0; col < mario[row].length; col++) {
+
+      let pixel = mario[row][col];
+
+      switch (pixel) {
+
+        // Red hat and shirt
+        case "R":
+          fill("#E52521");
+          break;
+
+        // Brown hair / moustache
+        case "H":
+          fill("#6B3518");
+          break;
+
+        // Skin
+        case "S":
+          fill("#FFBD8A");
+          break;
+
+        // Blue overalls
+        case "B":
+          fill("#0055A4");
+          break;
+
+        // Yellow buttons
+        case "Y":
+          fill("#FFD700");
+          break;
+
+        // Shoes
+        case "D":
+          fill("#6B3518");
+          break;
+
+        // Empty pixel
+        default:
+          continue;
       }
-      rect(j * 50 + 25, i * 50 + 25, 50, 50);
-      fill(255,0,0)
-      text(index,j * 50 + 25, i * 50 + 35)
-      index++;
+
+      rect(
+        x + col * px,
+        y + row * px,
+        px,
+        px
+      );
     }
   }
 }
