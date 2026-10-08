@@ -1,38 +1,38 @@
 // Questions
 let questions = [
   {
-    question: "Which video game has sold the most copies worldwide?",
-    answers: ["Minecraft", "GTA V", "Wii Sports", "PUBG"],
+    question: "Hoeveel tyfus heeft tyfus?",
+    answers: ["tyfus III", "Tyfus II", "tyfus I", "Tyfus"],
     correct: 0
   },
   {
-    question: "Approximately how many copies has Minecraft sold?",
-    answers: ["200 million", "300 million", "350 million", "400 million"],
-    correct: 2
-  },
-  {
-    question: "Which game has sold more than 200 million copies?",
-    answers: ["GTA V", "The Witcher 3", "Red Dead Redemption 2", "Mario Kart 8"],
+    question: "Heeft mijn kip bart tyfus?",
+    answers: ["ja", "nee", "Tyfus III", "kan"],
     correct: 0
   },
   {
-    question: "Which game is the best-selling Nintendo Switch game?",
-    answers: ["Super Mario Odyssey", "Mario Kart 8 Deluxe", "Animal Crossing: New Horizons", "Breath of the Wild"],
+    question: "Kan je tyfus van een aardappel krijgen?",
+    answers: ["nee", "alleen tyfus III", "er is altijd een kans", "ja"],
+    correct: 0
+  },
+  {
+    question: "kan je cholera krijgen van regen water?",
+    answers: ["Ik heb het zelf gekregen van regen water", "nee", "ja", "goede vraag"],
     correct: 1
   },
   {
-    question: "In which year was GTA V originally released?",
-    answers: ["2011", "2012", "2013", "2014"],
+    question: "welke ziekte was er eerder?",
+    answers: ["covid", "cholera", "tyfus III", "tyfus"],
     correct: 2
   },
   {
-    question: "Which game sold more than 80 million copies on the Wii?",
-    answers: ["Mario Kart Wii", "Wii Sports", "Wii Fit", "Super Mario Galaxy"],
+    question: "?",
+    answers: ["kip", "aardappel", "cholera", "schildpad"],
     correct: 1
   },
   {
-    question: "Which of these games was released first?",
-    answers: ["Minecraft", "GTA V", "The Witcher 3", "Red Dead Redemption 2"],
+    question: "wat is de gemiddelde hoogte van een water fles?",
+    answers: ["37cm", "203mm", "18cm", "19cm"],
     correct: 0
   },
   {
@@ -91,12 +91,12 @@ function drawStartScreen() {
   fill(255);
   textStyle(BOLD);
   textSize(52);
-  text("GAME QUIZ", width / 2, 160);
+  text("QUIZB", width / 2, 160);
 
   textStyle(NORMAL);
   textSize(22);
   fill(190, 200, 230);
-  text("10 questions about video game statistics", width / 2, 225);
+  text("10 vragen", width / 2, 225);
 
   // Start button
   drawButton(
@@ -121,7 +121,7 @@ function drawQuizScreen() {
   fill(255);
   textStyle(BOLD);
   textSize(25);
-  text("GAME QUIZ", width / 2, 40);
+  text("QUIZB", width / 2, 40);
 
   textStyle(NORMAL);
   textSize(18);
@@ -271,7 +271,7 @@ function drawEndScreen() {
   textStyle(BOLD);
   textSize(48);
   textAlign(CENTER, CENTER);
-  text("QUIZ FINISHED", width / 2, 130);
+  text("QUIZB FINISHED", width / 2, 130);
 
   textStyle(NORMAL);
 
