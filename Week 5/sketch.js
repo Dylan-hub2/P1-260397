@@ -13,11 +13,16 @@ let questions = [
   {
     question: "Kan je tyfus van een aardappel krijgen?",
     answers: ["nee", "alleen tyfus III", "er is altijd een kans", "ja"],
-    correct: 0
+    correct: 1
   },
   {
     question: "kan je cholera krijgen van regen water?",
-    answers: ["Ik heb het zelf gekregen van regen water", "nee", "ja", "goede vraag"],
+    answers: [
+      "Ik heb het zelf gekregen van regen water",
+      "nee",
+      "ja",
+      "goede vraag"
+    ],
     correct: 1
   },
   {
@@ -26,29 +31,29 @@ let questions = [
     correct: 2
   },
   {
-    question: "?",
+    question: "kip kip kip?",
     answers: ["kip", "aardappel", "cholera", "schildpad"],
     correct: 1
   },
   {
-    question: "wat is de gemiddelde hoogte van een water fles?",
-    answers: ["37cm", "203mm", "18cm", "19cm"],
+    question: "wat is ongeveer de gemiddelde hoogte van een water fles?",
+    answers: ["37cm", "20cm", "18cm", "19cm"],
+    correct: 1
+  },
+  {
+    question: "heb jij tyfus?",
+    answers: ["ja", "Nee", "nEe", "nee"],
+    correct: 1
+  },
+  {
+    question: "hoeveel kippen zijn er op aarde?",
+    answers: ["22 miljard", "kip II", "20 miljard", "30 miljard"],
     correct: 0
   },
   {
-    question: "Which game has sold approximately 50 million copies?",
-    answers: ["The Witcher 3", "Super Mario Odyssey", "God of War", "Hogwarts Legacy"],
-    correct: 0
-  },
-  {
-    question: "Which game reached 100 million players faster?",
-    answers: ["Fortnite", "Minecraft", "Apex Legends", "PUBG"],
+    question: "wat zit in een regrubmah",
+    answers: ["kip", "tyfus III", "koe", "varken"],
     correct: 2
-  },
-  {
-    question: "Which game had the highest launch sales of these titles?",
-    answers: ["GTA V", "Red Dead Redemption 2", "Cyberpunk 2077", "The Last of Us Part II"],
-    correct: 0
   }
 ];
 
@@ -128,7 +133,7 @@ function drawQuizScreen() {
   fill(170, 180, 210);
 
   text(
-    "Question " + (currentQuestion + 1) + " / " + questions.length,
+    "vraag " + (currentQuestion + 1) + " / " + questions.length,
     width / 2,
     75
   );
@@ -189,7 +194,6 @@ function drawQuestion() {
 
   // Answer buttons
   for (let i = 0; i < questionData.answers.length; i++) {
-
     let x = 100 + (i % 2) * 380;
     let y = 320 + floor(i / 2) * 105;
 
@@ -228,7 +232,6 @@ function drawButton(
   label,
   buttonColor
 ) {
-
   // Hover effect
   let hovering =
     mouseX >= x &&
@@ -280,8 +283,9 @@ function drawEndScreen() {
   textSize(75);
   text(score + " / " + questions.length, width / 2, 250);
 
-  let percentage =
-    round((score / questions.length) * 100);
+  let percentage = round(
+    (score / questions.length) * 100
+  );
 
   fill(200, 210, 235);
   textSize(25);
@@ -291,15 +295,15 @@ function drawEndScreen() {
   let resultMessage;
 
   if (percentage === 100) {
-    resultMessage = "All questions correct.";
+    resultMessage = "hoe.";
   } else if (percentage >= 80) {
-    resultMessage = "Very good result.";
+    resultMessage = "goed.";
   } else if (percentage >= 60) {
-    resultMessage = "Good result.";
+    resultMessage = "goed genoeg.";
   } else if (percentage >= 40) {
-    resultMessage = "You can improve your score.";
+    resultMessage = "je kan beter dan dit.";
   } else {
-    resultMessage = "Try again to improve your score.";
+    resultMessage = "probeer opnieuw.";
   }
 
   fill(170, 180, 210);
@@ -312,7 +316,7 @@ function drawEndScreen() {
     470,
     300,
     70,
-    "PLAY AGAIN",
+    "Speel opnieuw",
     color(60, 120, 255)
   );
 }
@@ -321,9 +325,8 @@ function drawEndScreen() {
 // Mouse input
 function mousePressed() {
 
-  // Start
+  // Start screen
   if (gameState === "start") {
-
     if (
       mouseX >= width / 2 - 150 &&
       mouseX <= width / 2 + 150 &&
@@ -334,14 +337,12 @@ function mousePressed() {
     }
   }
 
-  // Quiz
+  // Quiz screen
   else if (gameState === "quiz") {
-
     if (feedback === "") {
 
       // Check clicked answer
       for (let i = 0; i < answerButtons.length; i++) {
-
         let button = answerButtons[i];
 
         if (
@@ -356,13 +357,13 @@ function mousePressed() {
       }
 
     } else {
+      // Click anywhere to continue
       nextQuestion();
     }
   }
 
-  // End
+  // End screen — FIXED
   else if (gameState === "end") {
-
     if (
       mouseX >= width / 2 - 150 &&
       mouseX <= width / 2 + 150 &&
@@ -375,27 +376,28 @@ function mousePressed() {
 }
 
 
-// Start quiz
+// Start or restart quiz
 function startQuiz() {
   currentQuestion = 0;
   score = 0;
   feedback = "";
+  feedbackColor = color(255);
+  answerButtons = [];
   gameState = "quiz";
 }
 
 
 // Check answer
 function checkAnswer(selectedAnswer) {
-
   let correctAnswer =
     questions[currentQuestion].correct;
 
   if (selectedAnswer === correctAnswer) {
     score++;
-    feedback = "Correct";
+    feedback = "goed";
     feedbackColor = color(70, 220, 120);
   } else {
-    feedback = "Incorrect";
+    feedback = "fout";
     feedbackColor = color(255, 90, 90);
   }
 }
