@@ -1,39 +1,33 @@
-// Questions
 let questions = [
   {
-    question: "Hoeveel tyfus heeft tyfus?",
-    answers: ["tyfus III", "Tyfus II", "tyfus I", "Tyfus"],
-    correct: 0
-  },
-  {
-    question: "Heeft mijn kip bart tyfus?",
-    answers: ["ja", "nee", "Tyfus III", "kan"],
-    correct: 0
-  },
-  {
-    question: "Kan je tyfus van een aardappel krijgen?",
-    answers: ["nee", "alleen tyfus III", "er is altijd een kans", "ja"],
+    question: "Wat is ongeveer het hoogste gebouw ter wereld?",
+    answers: ["500 meter", "828 meter", "1.000 meter", "650 meter"],
     correct: 1
   },
   {
-    question: "kan je cholera krijgen van regen water?",
-    answers: [
-      "Ik heb het zelf gekregen van regen water",
-      "nee",
-      "ja",
-      "goede vraag"
-    ],
-    correct: 1
-  },
-  {
-    question: "welke ziekte was er eerder?",
-    answers: ["covid", "cholera", "tyfus III", "tyfus"],
+    question: "Wat is de hoogste berg ter wereld?",
+    answers: ["K2", "Mont Blanc", "Mount Everest", "Kilimanjaro"],
     correct: 2
   },
   {
-    question: "kip kip kip?",
-    answers: ["kip", "aardappel", "cholera", "schildpad"],
+    question: "Hoe lang kan een blauwe vinvis ongeveer worden?",
+    answers: ["5 meter", "15 meter", "30 meter", "50 meter"],
+    correct: 2
+  },
+  {
+    question: "Hoe diep is de Marianentrog ongeveer?",
+    answers: ["2 kilometer", "5 kilometer", "11 kilometer", "20 kilometer"],
+    correct: 2
+  },
+  {
+    question: "Wat is ongeveer de diameter van de aarde?",
+    answers: ["6.400 km", "12.700 km", "25.000 km", "40.000 km"],
     correct: 1
+  },
+  {
+    question: "Hoe hoog kan een giraf ongeveer worden?",
+    answers: ["2 meter", "3 meter", "5,5 meter", "10 meter"],
+    correct: 2
   },
   {
     question: "wat is ongeveer de gemiddelde hoogte van een water fles?",
@@ -41,18 +35,18 @@ let questions = [
     correct: 1
   },
   {
-    question: "heb jij tyfus?",
-    answers: ["ja", "Nee", "nEe", "nee"],
+    question: "Hoe lang is een olympisch zwembad?",
+    answers: ["25 meter", "50 meter", "75 meter", "100 meter"],
     correct: 1
   },
   {
-    question: "hoeveel kippen zijn er op aarde?",
-    answers: ["22 miljard", "kip II", "20 miljard", "30 miljard"],
-    correct: 0
+    question: "Hoe hoog is de Eiffeltoren ongeveer, inclusief antennes?",
+    answers: ["150 meter", "220 meter", "330 meter", "450 meter"],
+    correct: 2
   },
   {
-    question: "wat zit in een regrubmah",
-    answers: ["kip", "tyfus III", "koe", "varken"],
+    question: "Hoe lang is de Chinese Muur ongeveer, inclusief vertakkingen?",
+    answers: ["2.000 km", "8.000 km", "21.000 km", "50.000 km"],
     correct: 2
   }
 ];
@@ -65,12 +59,11 @@ let feedback = "";
 let feedbackColor;
 let answerButtons = [];
 
-
 function setup() {
   createCanvas(900, 650);
   textAlign(CENTER, CENTER);
+  textFont("Arial");
 }
-
 
 // Main screen
 function draw() {
@@ -83,27 +76,26 @@ function draw() {
   }
 }
 
-
 // Start screen
 function drawStartScreen() {
   background(20, 25, 50);
 
-  // Decoration
   fill(60, 100, 255, 30);
+  noStroke();
   circle(100, 100, 200);
   circle(800, 550, 250);
 
   fill(255);
   textStyle(BOLD);
   textSize(52);
+  textAlign(CENTER, CENTER);
   text("QUIZB", width / 2, 160);
 
   textStyle(NORMAL);
   textSize(22);
   fill(190, 200, 230);
-  text("10 vragen", width / 2, 225);
+  text("10 vragen over metingen", width / 2, 225);
 
-  // Start button
   drawButton(
     width / 2 - 150,
     340,
@@ -115,9 +107,8 @@ function drawStartScreen() {
 
   fill(140, 150, 180);
   textSize(18);
-  text("Multiple choice", width / 2, 470);
+  text("Hoe groot, hoog, diep of lang?", width / 2, 470);
 }
-
 
 // Quiz screen
 function drawQuizScreen() {
@@ -126,6 +117,7 @@ function drawQuizScreen() {
   fill(255);
   textStyle(BOLD);
   textSize(25);
+  textAlign(CENTER, CENTER);
   text("QUIZB", width / 2, 40);
 
   textStyle(NORMAL);
@@ -133,12 +125,13 @@ function drawQuizScreen() {
   fill(170, 180, 210);
 
   text(
-    "vraag " + (currentQuestion + 1) + " / " + questions.length,
+    "Vraag " + (currentQuestion + 1) + " / " + questions.length,
     width / 2,
     75
   );
 
   // Progress bar
+  noStroke();
   fill(45, 50, 80);
   rect(150, 100, 600, 12, 6);
 
@@ -159,17 +152,22 @@ function drawQuizScreen() {
     textStyle(BOLD);
     textSize(22);
     textAlign(CENTER, CENTER);
-    text(feedback, width / 2, 610);
+
+    text(feedback, width / 2, 600, 700, 35);
+
+    fill(170, 180, 210);
     textStyle(NORMAL);
+    textSize(14);
+    text("Klik ergens om verder te gaan", width / 2, 630);
   }
 }
-
 
 // Draw question
 function drawQuestion() {
   let questionData = questions[currentQuestion];
 
   // Question box
+  noStroke();
   fill(35, 42, 75);
   rect(70, 135, 760, 150, 20);
 
@@ -182,9 +180,9 @@ function drawQuestion() {
 
   text(
     questionData.question,
-    100,
+    110,
     155,
-    700,
+    680,
     110
   );
 
@@ -206,7 +204,7 @@ function drawQuestion() {
 
     let buttonColor = color(55, 65, 105);
 
-    // Show correct answer
+    // Show correct answer after selection
     if (feedback !== "" && i === questionData.correct) {
       buttonColor = color(40, 150, 90);
     }
@@ -222,7 +220,6 @@ function drawQuestion() {
   }
 }
 
-
 // Draw button
 function drawButton(
   x,
@@ -232,7 +229,6 @@ function drawButton(
   label,
   buttonColor
 ) {
-  // Hover effect
   let hovering =
     mouseX >= x &&
     mouseX <= x + buttonWidth &&
@@ -247,24 +243,28 @@ function drawButton(
     );
   }
 
+  // Button background
   fill(buttonColor);
   noStroke();
   rect(x, y, buttonWidth, buttonHeight, 15);
 
+  // Button text
   fill(255);
   textStyle(BOLD);
-  textSize(19);
+  textSize(18);
   textAlign(CENTER, CENTER);
+  textWrap(WORD);
 
   text(
     label,
-    x + buttonWidth / 2,
-    y + buttonHeight / 2
+    x + 10,
+    y + 5,
+    buttonWidth - 20,
+    buttonHeight - 10
   );
 
   textStyle(NORMAL);
 }
-
 
 // End screen
 function drawEndScreen() {
@@ -272,8 +272,9 @@ function drawEndScreen() {
 
   fill(255);
   textStyle(BOLD);
-  textSize(48);
+  textSize(46);
   textAlign(CENTER, CENTER);
+
   text("QUIZB FINISHED", width / 2, 130);
 
   textStyle(NORMAL);
@@ -295,15 +296,15 @@ function drawEndScreen() {
   let resultMessage;
 
   if (percentage === 100) {
-    resultMessage = "hoe.";
+    resultMessage = "Perfect!";
   } else if (percentage >= 80) {
-    resultMessage = "goed.";
+    resultMessage = "Goed gedaan!";
   } else if (percentage >= 60) {
-    resultMessage = "goed genoeg.";
+    resultMessage = "Goed genoeg!";
   } else if (percentage >= 40) {
-    resultMessage = "je kan beter dan dit.";
+    resultMessage = "Je kan beter dan dit!";
   } else {
-    resultMessage = "probeer opnieuw.";
+    resultMessage = "Probeer opnieuw!";
   }
 
   fill(170, 180, 210);
@@ -321,10 +322,8 @@ function drawEndScreen() {
   );
 }
 
-
 // Mouse input
 function mousePressed() {
-
   // Start screen
   if (gameState === "start") {
     if (
@@ -340,8 +339,6 @@ function mousePressed() {
   // Quiz screen
   else if (gameState === "quiz") {
     if (feedback === "") {
-
-      // Check clicked answer
       for (let i = 0; i < answerButtons.length; i++) {
         let button = answerButtons[i];
 
@@ -355,14 +352,12 @@ function mousePressed() {
           break;
         }
       }
-
     } else {
-      // Click anywhere to continue
       nextQuestion();
     }
   }
 
-  // End screen — FIXED
+  // End screen
   else if (gameState === "end") {
     if (
       mouseX >= width / 2 - 150 &&
@@ -375,7 +370,6 @@ function mousePressed() {
   }
 }
 
-
 // Start or restart quiz
 function startQuiz() {
   currentQuestion = 0;
@@ -386,7 +380,6 @@ function startQuiz() {
   gameState = "quiz";
 }
 
-
 // Check answer
 function checkAnswer(selectedAnswer) {
   let correctAnswer =
@@ -394,14 +387,13 @@ function checkAnswer(selectedAnswer) {
 
   if (selectedAnswer === correctAnswer) {
     score++;
-    feedback = "goed";
+    feedback = "Goed!";
     feedbackColor = color(70, 220, 120);
   } else {
-    feedback = "fout";
+    feedback = "Fout!";
     feedbackColor = color(255, 90, 90);
   }
 }
-
 
 // Next question
 function nextQuestion() {
