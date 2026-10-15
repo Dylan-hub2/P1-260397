@@ -3,24 +3,53 @@ let energy = 80;
 let happiness = 70;
 let health = 100;
 
-// Current action
 let currentAction = "none";
 let actionTimer = 0;
+let saveMessage = "";
+let saveMessageTimer = 0;
 
 function setup() {
   createCanvas(600, 500);
   textAlign(CENTER);
+
+  // Load saved game when the sketch starts
+  loadGame();
+}
+
+function saveGame() {
+  let gameData = {
+    hunger: hunger,
+    energy: energy,
+    happiness: happiness,
+    health: health
+  };
+
+  storeItem("bartSave", gameData);
+
+  saveMessage = "Game opgeslagen!";
+  saveMessageTimer = 120;
+}
+
+function loadGame() {
+  let savedData = getItem("bartSave");
+
+  if (savedData) {
+    hunger = savedData.hunger;
+    energy = savedData.energy;
+    happiness = savedData.happiness;
+    health = savedData.health;
+  }
 }
 
 function draw() {
   background(190, 225, 255);
 
-  // Draw the grass
+  // Grass
   noStroke();
   fill(120, 200, 100);
   rect(0, 350, 600, 150);
 
-  // Update action timer
+  // Action timer
   if (actionTimer > 0) {
     actionTimer--;
   } else {
@@ -34,11 +63,11 @@ function draw() {
     chickenY = -20;
   }
 
-  // Chicken body
+  // Body
   fill(255, 245, 210);
   ellipse(300, 300 + chickenY, 150, 120);
 
-  // Chicken head
+  // Head
   ellipse(300, 220 + chickenY, 100, 90);
 
   // Comb
@@ -47,15 +76,16 @@ function draw() {
   ellipse(300, 168 + chickenY, 20, 35);
   ellipse(320, 175 + chickenY, 20, 30);
 
-  // Eye: closed when sleeping
+  // Eye closes while sleeping
   if (currentAction === "sleep") {
     stroke(0);
     strokeWeight(3);
-    line(
-      313, 210 + chickenY,
-      327, 210 + chickenY
-    );
+    line(313, 210 + chickenY, 327, 210 + chickenY);
     noStroke();
+
+    fill(50, 80, 160);
+    textSize(22);
+    text("Z z z", 365, 175 + chickenY);
   } else {
     fill(0);
     ellipse(320, 210 + chickenY, 10, 10);
@@ -65,19 +95,16 @@ function draw() {
   fill(255, 165, 0);
 
   if (currentAction === "feed") {
-    // Open beak while eating
     triangle(
       340, 220 + chickenY,
       370, 230 + chickenY,
       340, 245 + chickenY
     );
 
-    // Food
     fill(240, 190, 50);
     ellipse(375, 255, 18, 12);
     ellipse(385, 250, 12, 10);
   } else {
-    // Normal beak
     triangle(
       340, 220 + chickenY,
       365, 230 + chickenY,
@@ -113,19 +140,12 @@ function draw() {
     noStroke();
   }
 
-  // Sleep Z symbols
-  if (currentAction === "sleep") {
-    fill(50, 80, 160);
-    textSize(22);
-    text("Z z z", 365, 175 + chickenY);
-  }
-
   // Name
   fill(50);
   textSize(24);
   text("Bart de kip", 300, 40);
 
-  // Statistics
+  // Stats
   textSize(16);
   text("Honger: " + hunger, 100, 90);
   text("Energie: " + energy, 230, 90);
@@ -134,12 +154,11 @@ function draw() {
 
   // Hunger warning
   if (hunger <= 30) {
-    fill("white");
+    fill(255);
     stroke(50);
-    strokeWeight(1);
     rect(350, 120, 100, 45, 5);
-    noStroke();
 
+    noStroke();
     fill(0);
     textSize(14);
     text("Voed mij!", 400, 148);
@@ -165,27 +184,45 @@ function draw() {
     text(b.label, b.x + b.w / 2, 442);
   }
 
+  // Save button
+  fill(255, 220, 100);
+  stroke(120);
+  strokeWeight(1);
+  rect(240, 355, 120, 40, 10);
+
+  noStroke();
+  fill(50);
+  textSize(16);
+  text("Opslaan", 300, 380);
+
+  // Save confirmation
+  if (saveMessageTimer > 0) {
+    saveMessageTimer--;
+
+    fill(20, 100, 40);
+    textSize(15);
+    text(saveMessage, 300, 335);
+  }
+
   // Stats decrease over time
   if (frameCount % 120 === 0) {
-    hunger = max(0, hunger - 5);
-    happiness = max(0, happiness - 3);
+    hunger = max(0, hunger - 10);
+    happiness = max(0, happiness - 1);
 
-    // Energy decreases only when not sleeping
     if (currentAction !== "sleep") {
       energy = max(0, energy - 1);
     }
   }
 
-  // Health decreases if Bart is starving
+  // Starvation reduces health
   if (hunger <= 0 && frameCount % 30 === 0) {
-    health = max(0, health - 5);
+    health = max(0, health - 1);
   }
 
-  // Health warning
   if (health <= 0) {
     fill(255, 0, 0);
-    textSize(28);
-    text("Bart sterft!", 300, 130);
+    textSize(24);
+    text("Bart heeft hulp nodig!", 300, 130);
   }
 }
 
@@ -197,7 +234,6 @@ function mousePressed() {
   ) {
     hunger = min(100, hunger + 15);
     energy = min(100, energy + 10);
-
     currentAction = "feed";
     actionTimer = 90;
   }
@@ -209,7 +245,6 @@ function mousePressed() {
   ) {
     happiness = min(100, happiness + 15);
     energy = max(0, energy - 10);
-
     currentAction = "play";
     actionTimer = 90;
   }
@@ -220,7 +255,6 @@ function mousePressed() {
     mouseY > 410 && mouseY < 465
   ) {
     health = min(100, health + 15);
-
     currentAction = "clean";
     actionTimer = 90;
   }
@@ -233,5 +267,13 @@ function mousePressed() {
     currentAction = "sleep";
     actionTimer = 300;
     energy = min(100, energy + 20);
+  }
+
+  // Manual save
+  else if (
+    mouseX > 240 && mouseX < 360 &&
+    mouseY > 355 && mouseY < 395
+  ) {
+    saveGame();
   }
 }
