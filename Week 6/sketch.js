@@ -3,7 +3,7 @@ let energy = 80;
 let happiness = 70;
 let health = 100;
 
-// Store the current action
+// Current action
 let currentAction = "none";
 let actionTimer = 0;
 
@@ -20,38 +20,48 @@ function draw() {
   fill(120, 200, 100);
   rect(0, 350, 600, 150);
 
-  // Update the action timer
+  // Update action timer
   if (actionTimer > 0) {
     actionTimer--;
   } else {
     currentAction = "none";
   }
 
-  // Make the chicken jump when playing
+  // Chicken movement
   let chickenY = 0;
 
   if (currentAction === "play") {
     chickenY = -20;
   }
 
-  // Draw the chicken's body
+  // Chicken body
   fill(255, 245, 210);
   ellipse(300, 300 + chickenY, 150, 120);
 
-  // Draw the chicken's head
+  // Chicken head
   ellipse(300, 220 + chickenY, 100, 90);
 
-  // Draw the chicken's comb
+  // Comb
   fill(220, 40, 50);
   ellipse(280, 175 + chickenY, 20, 30);
   ellipse(300, 168 + chickenY, 20, 35);
   ellipse(320, 175 + chickenY, 20, 30);
 
-  // Draw the chicken's eye
-  fill(0);
-  ellipse(320, 210 + chickenY, 10, 10);
+  // Eye: closed when sleeping
+  if (currentAction === "sleep") {
+    stroke(0);
+    strokeWeight(3);
+    line(
+      313, 210 + chickenY,
+      327, 210 + chickenY
+    );
+    noStroke();
+  } else {
+    fill(0);
+    ellipse(320, 210 + chickenY, 10, 10);
+  }
 
-  // Change the beak depending on the action
+  // Beak
   fill(255, 165, 0);
 
   if (currentAction === "feed") {
@@ -62,11 +72,10 @@ function draw() {
       340, 245 + chickenY
     );
 
-    // Draw the food
+    // Food
     fill(240, 190, 50);
     ellipse(375, 255, 18, 12);
     ellipse(385, 250, 12, 10);
-
   } else {
     // Normal beak
     triangle(
@@ -76,12 +85,11 @@ function draw() {
     );
   }
 
-  // Draw the chicken's legs
+  // Legs
   stroke(220, 120, 0);
   strokeWeight(5);
 
   if (currentAction === "play") {
-    // Raised legs while jumping
     line(275, 350 + chickenY, 260, 340 + chickenY);
     line(325, 350 + chickenY, 340, 340 + chickenY);
   } else {
@@ -91,7 +99,7 @@ function draw() {
 
   noStroke();
 
-  // Draw cleaning bubbles
+  // Cleaning bubbles
   if (currentAction === "clean") {
     noFill();
     stroke(100, 200, 255);
@@ -105,70 +113,98 @@ function draw() {
     noStroke();
   }
 
-  // Display the chicken's name
+  // Sleep Z symbols
+  if (currentAction === "sleep") {
+    fill(50, 80, 160);
+    textSize(22);
+    text("Z z z", 365, 175 + chickenY);
+  }
+
+  // Name
   fill(50);
   textSize(24);
   text("Bart de kip", 300, 40);
 
-  // Display statistics
+  // Statistics
   textSize(16);
   text("Honger: " + hunger, 100, 90);
   text("Energie: " + energy, 230, 90);
   text("Geluk: " + happiness, 360, 90);
   text("Gezondheid: " + health, 500, 90);
 
-  // Draw buttons
-  fill(255);
-  rect(20, 410, 120, 55, 10);
-  rect(170, 410, 120, 55, 10);
-  rect(320, 410, 120, 55, 10);
+  // Hunger warning
+  if (hunger <= 30) {
+    fill("white");
+    stroke(50);
+    strokeWeight(1);
+    rect(350, 120, 100, 45, 5);
+    noStroke();
 
-  // Display button labels
-  fill(50);
-  text("Voeren", 80, 442);
-  text("Spelen", 230, 442);
-  text("Schoonmaken", 380, 442);
+    fill(0);
+    textSize(14);
+    text("Voed mij!", 400, 148);
+  }
 
-  // Change stats over time
+  // Buttons
+  const buttons = [
+    { x: 20,  w: 120, label: "Voeren" },
+    { x: 165, w: 120, label: "Spelen" },
+    { x: 310, w: 130, label: "Schoonmaken" },
+    { x: 460, w: 120, label: "Slapen" }
+  ];
+
+  for (let b of buttons) {
+    fill(255);
+    stroke(120);
+    strokeWeight(1);
+    rect(b.x, 410, b.w, 55, 10);
+
+    noStroke();
+    fill(50);
+    textSize(15);
+    text(b.label, b.x + b.w / 2, 442);
+  }
+
+  // Stats decrease over time
   if (frameCount % 120 === 0) {
-    hunger = min(100, hunger - 15);
-    energy = max(0, energy - 1);
-    happiness = max(0, happiness - 1);
-  }
-  if (hunger <= 30){
-    strokeWeight(2)
-    fill("white")
-   rect(350,120,100,45,5)
-   fill(0)
-   text("Voed mij",400,150)
- }
- if (hunger <= 1){
-  if(frameCount(30)){
-    health -= 20
-  }
-  if(frameCount(60)){
-    frameCount = 0
-  }
- }
-}
-// Handle mouse clicks
-function mousePressed() {
+    hunger = max(0, hunger - 5);
+    happiness = max(0, happiness - 3);
 
-  // Feed the chicken
+    // Energy decreases only when not sleeping
+    if (currentAction !== "sleep") {
+      energy = max(0, energy - 1);
+    }
+  }
+
+  // Health decreases if Bart is starving
+  if (hunger <= 0 && frameCount % 30 === 0) {
+    health = max(0, health - 5);
+  }
+
+  // Health warning
+  if (health <= 0) {
+    fill(255, 0, 0);
+    textSize(28);
+    text("Bart sterft!", 300, 130);
+  }
+}
+
+function mousePressed() {
+  // Feed
   if (
     mouseX > 20 && mouseX < 140 &&
     mouseY > 410 && mouseY < 465
   ) {
-    hunger = max(0, hunger + 15);
+    hunger = min(100, hunger + 15);
     energy = min(100, energy + 10);
 
     currentAction = "feed";
     actionTimer = 90;
   }
 
-  // Play with the chicken
+  // Play
   else if (
-    mouseX > 170 && mouseX < 290 &&
+    mouseX > 165 && mouseX < 285 &&
     mouseY > 410 && mouseY < 465
   ) {
     happiness = min(100, happiness + 15);
@@ -178,14 +214,24 @@ function mousePressed() {
     actionTimer = 90;
   }
 
-  // Clean the chicken
+  // Clean
   else if (
-    mouseX > 320 && mouseX < 440 &&
+    mouseX > 310 && mouseX < 440 &&
     mouseY > 410 && mouseY < 465
   ) {
     health = min(100, health + 15);
 
     currentAction = "clean";
     actionTimer = 90;
+  }
+
+  // Sleep
+  else if (
+    mouseX > 460 && mouseX < 580 &&
+    mouseY > 410 && mouseY < 465
+  ) {
+    currentAction = "sleep";
+    actionTimer = 300;
+    energy = min(100, energy + 20);
   }
 }
