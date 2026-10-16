@@ -206,7 +206,7 @@ function draw() {
 
   // Stats decrease over time
   if (frameCount % 120 === 0) {
-    hunger = max(0, hunger - 10);
+    hunger = max(0, hunger - 5);
     happiness = max(0, happiness - 1);
 
     if (currentAction !== "sleep") {
