@@ -499,9 +499,7 @@ function updateGame() {
   checkDeath();
 }
 
-// -------------------------
 // METEOR
-// -------------------------
 
 function startMeteor() {
   meteorActive = true;
