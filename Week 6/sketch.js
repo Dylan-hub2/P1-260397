@@ -164,9 +164,7 @@ function draw() {
   }
 }
 
-// -------------------------
 // BACKGROUND
-// -------------------------
 
 function drawBackground() {
   background(170, 218, 250);
