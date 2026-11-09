@@ -31,13 +31,12 @@ function setup() {
   noSmooth();
   textAlign(CENTER, CENTER);
 
-  // Load chicken image without stopping the game
+  // Load chicken image
   loadImage(
     "bart.png",
     function(img) {
       chickenImage = img;
       imageLoaded = true;
-      removeBlueBackground();
     },
     function(err) {
       console.error("Could not load bart.png", err);
@@ -50,27 +49,6 @@ function setup() {
   lastHealthDecay = frameCount;
 
   checkDeath();
-}
-
-// REMOVE BLUE BACKGROUND
-
-function removeBlueBackground() {
-  if (!imageLoaded) return;
-
-  chickenImage.loadPixels();
-
-  for (let i = 0; i < chickenImage.pixels.length; i += 4) {
-    let r = chickenImage.pixels[i];
-    let g = chickenImage.pixels[i + 1];
-    let b = chickenImage.pixels[i + 2];
-
-    // Detect the light blue background
-    if (b > 200 && g > 180 && r < 210) {
-      chickenImage.pixels[i + 3] = 0;
-    }
-  }
-
-  chickenImage.updatePixels();
 }
 
 // SAVE AND LOAD
@@ -215,6 +193,7 @@ function drawChicken() {
   imageMode(CENTER);
 
   if (imageLoaded) {
+    // Draw original image with its original blue background
     image(chickenImage, 0, 0, 192, 192);
   } else {
     // Fallback chicken if image hasn't loaded
@@ -552,7 +531,9 @@ function killBartByMeteor() {
 
   saveGame();
 }
+
 // DEATH
+
 function checkDeath() {
   if (health <= 0 && !bartDead) {
     health = 0;
